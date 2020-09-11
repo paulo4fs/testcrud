@@ -6,8 +6,8 @@
   "scripts": {
     "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "knex":"",
     "knex:migrate": "knex --knexfile knexfile.js migrate:latest",
+    "knex:seed": "knex --knexfile knexfile.js seed:run",
     "knex:migrate:rollback": "knex --knexfile knexfile.js migrate:rollback"
   },
   "author": "",

@@ -1,13 +1,11 @@
-const knex = require('knex');
-
-export async function up(knex) {
+exports.up = async (knex) => {
   return knex.schema.createTable('produto', (table) => {
     table.increments('idproduto').primary();
     table.string('nome', 50).notNullable();
-    table.float('preco', 3).notNullable();
+    table.float('preco').notNullable();
   });
-}
+};
 
-export async function down(knex) {
+exports.down = async (knex) => {
   return knex.schema.dropTable('produto');
-}
+};

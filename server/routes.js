@@ -1,18 +1,27 @@
 const express = require('express');
 
-const ClassesController = require('./controllers/ClassesController');
-const ConnectionsController = require('./controllers/ConnectionsController');
+const vendaController = require('./controllers/vendaController');
+const estoqueController = require('./controllers/estoqueController');
+const produtoController = require('./controllers/produtoController');
 const router = express.Router();
 
-// const ClassesControllers = new ClassesController();
-// const ConnectionsControllers = new ConnectionsController();
+router
+  .route('/estoque')
+  .get(estoqueController.getAll)
+  .post(estoqueController.createOne);
 
-// router.get('/classes', ClassesControllers.index);
-// router.post('/classes', ClassesControllers.create);
+router.route('/estoque/:id').delete(estoqueController.deleteOne);
 
 router
-  .route('/connections')
-  .get(ConnectionsController.index)
-  .post(ConnectionsController.create);
+  .route('/produto')
+  .get(produtoController.getAll)
+  .post(produtoController.createOne);
+
+router.route('/produto/:id').delete(produtoController.deleteOne);
+
+router
+  .route('/venda')
+  .get(vendaController.getAll)
+  .post(vendaController.createOne);
 
 module.exports = router;
