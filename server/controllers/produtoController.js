@@ -27,17 +27,18 @@ exports.createOne = async (request, response) => {
 };
 
 exports.updateOne = async (request, response) => {
+  const idproduto = request.params.id;
+  const { nome, preco } = request.body;
 
-  
-  const idproduto = await db('produto').insert({
-    nome,
-    preco,
-  });
+  // console.log(corpo);
+  const data = await db('produto')
+    .where('idproduto', idproduto)
+    .update({ nome, preco });
 
   return response.status(200).json({
     status: 'success',
     data: {
-      idproduto: idproduto[0],
+      idproduto,
       nome,
       preco,
     },

@@ -1,7 +1,12 @@
 const db = require('../database/connection');
 
 exports.getAll = async (request, response) => {
-  const data = await db('estoque');
+  const data = await db('estoque').innerJoin(
+    'produto',
+    'estoque.id_produto',
+    'produto.idproduto'
+  );
+
   return response.json({
     total: data.length,
     data,
@@ -40,6 +45,17 @@ exports.deleteOne = async (request, response) => {
 
   console.log(idestoque);
   await db('estoque').where('idestoque', idestoque).del();
+
+  return response.status(204).json({
+    status: 'success',
+    data: null,
+  });
+};
+
+exports.deleteAllOf = async (request, response) => {
+  const id_produto = request.params.id;
+
+  await db('estoque').where('id_produto', id_produto).del();
 
   return response.status(204).json({
     status: 'success',

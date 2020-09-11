@@ -17,11 +17,24 @@ router
   .get(produtoController.getAll)
   .post(produtoController.createOne);
 
-router.route('/produto/:id').delete(produtoController.deleteOne);
+router
+  .route('/produto/:id')
+  .patch(produtoController.updateOne)
+  .delete(produtoController.deleteOne);
 
 router
   .route('/venda')
   .get(vendaController.getAll)
   .post(vendaController.createOne);
+
+router
+  .route('/venda/:id')
+  .get(vendaController.getOne)
+  .patch(vendaController.updateOne)
+  .delete(vendaController.deleteOne);
+
+router.route('/estoque/:id').delete(estoqueController.deleteOne);
+
+router.route('/estoque/allof/:id').delete(estoqueController.deleteAllOf);
 
 module.exports = router;
