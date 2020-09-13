@@ -7,7 +7,45 @@ exports.getAll = async (request, response) => {
     'produto.idproduto'
   );
 
-  return response.json({
+  return response.status(200).json({
+    total: data.length,
+    data,
+  });
+};
+
+exports.allSold = async (request, response) => {
+  const data = await db('estoque')
+    .select(
+      'estoque.idestoque',
+      'estoque.data_entrada',
+      'estoque.data_saida',
+      'produto.idproduto',
+      'produto.nome',
+      'produto.preco'
+    )
+    .whereNotNull('data_saida')
+    .innerJoin('produto', 'estoque.id_produto', 'produto.idproduto');
+
+  return response.status(200).json({
+    total: data.length,
+    data,
+  });
+};
+
+exports.allNotSold = async (request, response) => {
+  const data = await db('estoque')
+    .select(
+      'estoque.idestoque',
+      'estoque.data_entrada',
+      'estoque.data_saida',
+      'produto.idproduto',
+      'produto.nome',
+      'produto.preco'
+    )
+    .where('data_saida', null)
+    .innerJoin('produto', 'estoque.id_produto', 'produto.idproduto');
+
+  return response.status(200).json({
     total: data.length,
     data,
   });
@@ -30,7 +68,7 @@ exports.createOne = async (request, response) => {
     data_entrada: str,
   });
 
-  return response.status(200).json({
+  return response.status(201).json({
     status: 'success',
     data: {
       idestoque: idestoque[0],

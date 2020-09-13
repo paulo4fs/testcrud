@@ -2,7 +2,7 @@ const db = require('../database/connection');
 
 exports.getAll = async (request, response) => {
   const data = await db('produto');
-  return response.json({
+  return response.status(200).json({
     total: data.length,
     data,
   });
@@ -16,7 +16,7 @@ exports.createOne = async (request, response) => {
     preco,
   });
 
-  return response.status(200).json({
+  return response.status(201).json({
     status: 'success',
     data: {
       idproduto: idproduto[0],
@@ -30,7 +30,6 @@ exports.updateOne = async (request, response) => {
   const idproduto = request.params.id;
   const { nome, preco } = request.body;
 
-  // console.log(corpo);
   const data = await db('produto')
     .where('idproduto', idproduto)
     .update({ nome, preco });

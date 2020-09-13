@@ -13,7 +13,12 @@ exports.getOne = async (request, response) => {
   const data = await db('venda').where('idvenda', idvenda);
 
   const items = await db('itemVenda')
-    .select('estoque.idestoque', 'produto.idproduto', 'produto.preco')
+    .select(
+      'estoque.idestoque',
+      'produto.idproduto',
+      'produto.nome',
+      'produto.preco'
+    )
     .where('id_venda', idvenda)
     .join('estoque', 'itemVenda.id_estoque', 'estoque.idestoque')
     .join('produto', 'estoque.id_produto', 'produto.idproduto');
@@ -40,43 +45,26 @@ exports.createOne = async (request, response) => {
     .replace(/-/g, '/')
     .replace('T', ' ');
 
-  console.log(idestoque, str);
-
   const idvenda = await db('venda').insert({
     data_saida: str,
   });
 
-  console.log(idvenda);
-
   const id_venda = idestoque.map(async (element) => {
-    await db('estoque')
+    return db('estoque')
       .where('idestoque', element.idestoque)
-      .update({ data_saida: str });
-    return await db('itemVenda').insert({
-      id_venda: idvenda,
-      id_estoque: element.idestoque,
-    });
+      .update({ data_saida: str })
+      .then(() => {
+        return db('itemVenda').insert({
+          id_venda: idvenda,
+          id_estoque: element.idestoque,
+        });
+      });
   });
 
-  console.log(id_venda);
-
-  return response.status(201).send();
-};
-
-exports.updateOne = async (request, response) => {
-  const idproduto = request.params.id;
-  const { nome, preco } = request.body;
-
-  const data = await db('produto')
-    .where('idproduto', idproduto)
-    .update({ nome, preco });
-
-  return response.status(200).json({
+  return response.status(201).json({
     status: 'success',
     data: {
-      idproduto,
-      nome,
-      preco,
+      idvenda,
     },
   });
 };
@@ -85,7 +73,7 @@ exports.deleteOne = async (request, response) => {
   const idvenda = request.params.id;
 
   console.log(idvenda);
-  await db('venda').where('idvenda', idvenda);
+  await db('venda').where('idvenda', idvenda).del();
 
   return response.status(204).json({
     status: 'success',

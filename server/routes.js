@@ -12,6 +12,10 @@ router
 
 router.route('/estoque/:id').delete(estoqueController.deleteOne);
 
+router.route('/estoque/allnotsold').get(estoqueController.allNotSold);
+
+router.route('/estoque/allsold').get(estoqueController.allSold);
+
 router
   .route('/produto')
   .get(produtoController.getAll)
@@ -30,7 +34,6 @@ router
 router
   .route('/venda/:id')
   .get(vendaController.getOne)
-  .patch(vendaController.updateOne)
   .delete(vendaController.deleteOne);
 
 router.route('/estoque/:id').delete(estoqueController.deleteOne);
