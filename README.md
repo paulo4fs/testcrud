@@ -9,7 +9,7 @@
 
 ## Diagrama lógico
 
-![Diagrama](./diagramalogico.PNG?raw=true 'diagrama')
+![Diagrama](./server/diagramalogico.PNG?raw=true 'diagrama')
 
 ## Instalação
 
