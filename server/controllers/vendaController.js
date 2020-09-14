@@ -49,7 +49,7 @@ exports.createOne = async (request, response) => {
     data_saida: str,
   });
 
-  const id_venda = idestoque.map(async (element) => {
+  idestoque.map(async (element) => {
     return db('estoque')
       .where('idestoque', element.idestoque)
       .update({ data_saida: str })
@@ -66,17 +66,5 @@ exports.createOne = async (request, response) => {
     data: {
       idvenda,
     },
-  });
-};
-
-exports.deleteOne = async (request, response) => {
-  const idvenda = request.params.id;
-
-  console.log(idvenda);
-  await db('venda').where('idvenda', idvenda).del();
-
-  return response.status(204).json({
-    status: 'success',
-    data: null,
   });
 };
