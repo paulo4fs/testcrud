@@ -10,11 +10,13 @@ router
   .get(estoqueController.getAll)
   .post(estoqueController.createOne);
 
-router.route('/estoque/:id').delete(estoqueController.deleteOne);
-
 router.route('/estoque/allnotsold').get(estoqueController.allNotSold);
 
 router.route('/estoque/allsold').get(estoqueController.allSold);
+
+router.route('/estoque/:id').delete(estoqueController.deleteOne);
+
+router.route('/estoque/allof/:id').delete(estoqueController.deleteAllOf);
 
 router
   .route('/produto')
@@ -31,13 +33,6 @@ router
   .get(vendaController.getAll)
   .post(vendaController.createOne);
 
-router
-  .route('/venda/:id')
-  .get(vendaController.getOne)
-  .delete(vendaController.deleteOne);
-
-router.route('/estoque/:id').delete(estoqueController.deleteOne);
-
-router.route('/estoque/allof/:id').delete(estoqueController.deleteAllOf);
+router.route('/venda/:id').get(vendaController.getOne);
 
 module.exports = router;
