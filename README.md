@@ -20,12 +20,21 @@
 
 ## Iniciando
 
+iniciar servidor:
 `npm start`
+
+O servidor é iniciado na porta 3333, e todas as rotas da api iniciam a partir de: `localhost:3333/api/v1/`.
 
 ## Rotas
 
-Todas as rotas podem ser importadas para o postman usando o arquivo: `CRUDteste.postman_collection.json`.
-O servidor é iniciado na porta 3333, e todas as rotas iniciam a partir de: `localhost:3333/api/v1/`.
+As rotas podem ser importadas para o postman utilizando o arquivo JSON: `CRUDteste.postman_collection.json`.
+Para importar é necessário no postman, clicar em import, ir na aba Raw Text, copiar e colar o conteúdo do arquivo `CRUDteste.postman_collection.json`.
+
+### Venda - `localhost:3333/api/v1/venda`
+
+- **GET** - _getAll_ - `/` - recebe todas as vendas cadastradas.
+- **GET** - _getOne_ - `/:id` - recebe a venda com a **idvenda**, os produtos cadastrados da venda, e o preço total da venda.
+- **POST** - _createOne_ - `/` - cria uma nova venda enviando um json com o body contendo um array de objetos contendo a **idestoque** de cada elemento vendido. Os elementos vendidos recebem uma data de saída na tabela Estoque.
 
 ### Produto - `localhost:3333/api/v1/produto`
 
@@ -42,9 +51,3 @@ O servidor é iniciado na porta 3333, e todas as rotas iniciam a partir de: `loc
 - **POST** - _createOne_ - `/` - cria um novo elemento enviando no body como json a **idproduto** do produto a ser adicionado no estoque.
 - **DEL** - _deleteOne_ - `/:id` - deleta um elemento do estoque com a **idelemento** do elemento a ser excluída.
 - **DEL** - _deleteAllOf_ - `/:id` - deleta todos os elementos do estoque com a **idproduto** do produto a ser excluido do estoque.
-
-### Venda - `localhost:3333/api/v1/venda`
-
-- **GET** - _getAll_ - `/` - recebe todas as vendas cadastradas.
-- **GET** - _getOne_ - `/:id` - recebe a venda com a **idvenda** enviada.
-- **POST** - _createOne_ - `/` - cria uma nova venda enviando um json com o body contendo um array de objetos contendo a **idestoque** de cada elemento vendido. Os elementos vendidos recebem uma data de saída na tabela Estoque.
